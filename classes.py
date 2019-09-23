@@ -1,60 +1,75 @@
 import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.animation as animation
+import cv2
 
+class Agent:
+    def __init__(self, coord):
+        self.x, self.y = coord
 
 class Game:
     def __init__(self, size=(100, 100)):
-        self.x, self.y = size
+        self.size = size
+        self.x, self.y = self.size
         self.board = np.zeros(shape=size)
+        self.agents = []
+        self.live = False
+    # def add_agent(self, coordinate):
+    #     assert type(coordinate) == tuple
+    #     self.agents.append(coordinate)
+    #     self.live = True
+    #     self.update_board()
+    def add_agent(self, agent):
+        assert type(agent) == Agent
+        self.agents.append(agent)
         self.live = True
-    def count(self):
-        board = np.zeros((self.y+2,self.x+2))
-        board[1:self.y+1, 1:self.x+1] = self.board.copy()
+        self.update_board()
+    def update_agents(self, new_agents):
+        """Update agents (after a time step)"""
+        self.agents = new_agents
+        if len(self.agents) > 0:
+            self.live = True
+    def is_alive(self, alive, neighbors):
+        """
+        If alive, live if 2 <= neighbors <= 3
+        If dead, live if neighbors == 3
+        """
+        if alive:
+            return (neighbors==2 or neighbors==3)
+        else:
+            return (neighbors==3)
+    def step(self):
+        """Update alive agents"""
+        board = np.zeros((self.y + 2, self.x + 2))
+        board[1:self.y + 1, 1:self.x + 1] = self.board.copy()
+        for agent in self.agents:
+            x, y = agent.x, agent.y
 
-        counts = np.zeros((self.y, self.x))
-        for y in range(1, self.y):
-            for x in range(1, self.x):
-                counts[y - 1, x - 1] = np.sum(board[y-1:y+2, x-1:x+2])\
-                                       - board[y, x]
-        self.live = int(np.sum(counts))
-        return counts
-    def update(self):
-        counts = self.count()
-        for y in range(self.y):
-            for x in range(self.x):
-                if self.board[y,x] == 1:
-                    if counts[y,x] > 3:
-                        self.board[y,x] = 0
-                    elif counts[y,x] == 2 or counts[y,x] == 3:
-                        self.board[y,x] = 1
-                    elif counts[y,x] < 2:
-                        self.board[y,x] = 0
-                else:
-                    if counts[y,x] == 3:
-                        self.board[y,x] = 1
-    def render(self, frames=100, speed=200):
-        fig = plt.figure()
-        def update(frame):
-            self.update()
-            return plt.imshow(self.board)
-        ani = animation.FuncAnimation(fig, update, interval=speed)
-        plt.show()
+        counts = np.negative(np.ones((self.y, self.x)))
+        new_agents = []  # List of coordinates of new agents
+        # For all agents, update neighbors
+        for agent in self.agents:
+            x, y = agent.x, agent.y
+            for j in range(y-1, y+2):
+                for i in range(x-1, x+2):
+                    # Update if not already updated
+                    if counts[j, i] == -1:
+                        cnt = np.sum(board[j:j+3, i:i+3]) \
+                                           - board[j+1, i+1]
+                        counts[j, i] = cnt
+                        if self.is_alive(board[j+1,i+1], cnt):
+                            # print(i-1, j-1, board[j,i], cnt)
+                            new_agents.append(Agent((i, j)))
 
-    def record(self, frames=100, speed=200):
-        """Records. Does not render."""
-        fig = plt.figure()
-        vid = []
-        f = 0
-        while self.live and f <= frames:
-            v = plt.imshow(self.board)
-            vid.append([v])
-            self.update()
-            f += 1
-        ani = animation.ArtistAnimation(fig, vid, interval=speed)
-        ani.save("replays/0.mp4")
-
-class Cell:
-    def __init__(self, x, y):
-        self.position = (x, y)
-        self.neighbors = 0
+        self.update_agents(new_agents)
+        self.update_board()
+    def update_board(self):
+        self.board = np.zeros(shape=self.size)
+        for agent in self.agents:
+            x, y = agent.x, agent.y
+            self.board[y, x] = 1
+    def render(self, speed=10, frames=(600,600)):
+        cv2.namedWindow("Life", cv2.WINDOW_NORMAL)
+        cv2.resizeWindow("Life", frames[0], frames[1])
+        while self.live:
+            self.step()
+            cv2.imshow("Life", self.board)
+            cv2.waitKey(speed)
