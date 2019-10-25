@@ -7,3 +7,5 @@
 
 #### Available Projects
 * [Conway's Game of Life](game-of-life)
+* [Ant Colony Optimization](ant-colony-optimization)
+* [Artificial Bee Colony](artificial-bee-colony)
