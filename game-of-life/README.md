@@ -7,7 +7,7 @@
 
 #### Installation
 ```
-pip install numpy, scipy, opencv-python
+pip install numpy scipy opencv-python
 git clone https://github.com/jetnew/multi-agent-systems.git
 ```
 
