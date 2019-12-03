@@ -12,13 +12,8 @@ class Game:
         self.board = np.zeros(shape=size)
         self.agents = []
         self.live = False
-    # def add_agent(self, coordinate):
-    #     assert type(coordinate) == tuple
-    #     self.agents.append(coordinate)
-    #     self.live = True
-    #     self.update_board()
     def add_agent(self, agent):
-        assert type(agent) == Agent
+        assert type(agent) == Agentgi
         self.agents.append(agent)
         self.live = True
         self.update_board()
