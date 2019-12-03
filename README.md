@@ -1,4 +1,4 @@
-# Multi-Agent Systems
+# Complex Systems
 
 #### Multi-Agent System
 * A multi-agent system (MAS or "self-organized system") is a computerized system composed of multiple interacting intelligent agents.
