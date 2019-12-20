@@ -14,10 +14,10 @@ class Space:
             cv2.namedWindow("Life", cv2.WINDOW_NORMAL)
             cv2.resizeWindow("Life", 600, 600)
 
-    def create_blob(self, x, y, val):
-        blob = Blob(x, y, val=val)
+    def create_blob(self, x, y, colour):
+        blob = Blob(x, y, colour)
         self.organisms[(x,y)] = blob
-        self.space[x,y] = blob.val
+        self.space[x,y] = blob.colour
 
     def delete_blob(self, x, y):
         del self.organisms[(x, y)]
