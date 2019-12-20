@@ -12,16 +12,11 @@ class Game:
         self.board = np.zeros(shape=size)
         self.agents = []
         self.live = False
-    # def add_agent(self, coordinate):
-    #     assert type(coordinate) == tuple
-    #     self.agents.append(coordinate)
-    #     self.live = True
-    #     self.update_board()
     def add_agent(self, agent):
         assert type(agent) == Agent
         self.agents.append(agent)
         self.live = True
-        self.update_board()
+        # self.update_board()
     def update_agents(self, new_agents):
         """Update agents (after a time step)"""
         self.agents = new_agents
@@ -51,7 +46,7 @@ class Game:
             for j in range(y-1, y+2):
                 for i in range(x-1, x+2):
                     # Update if not already updated
-                    if counts[j, i] == -1:
+                    if i < self.x and j < self.y and counts[j, i] == -1:
                         cnt = np.sum(board[j:j+3, i:i+3]) \
                                            - board[j+1, i+1]
                         counts[j, i] = cnt
