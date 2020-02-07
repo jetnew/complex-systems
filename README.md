@@ -12,3 +12,20 @@
 * [Conway's Game of Life](game-of-life)
 * [Ant Colony Optimization](ant-colony-optimization)
 * [Artificial Bee Colony](artificial-bee-colony)
+
+#### References
+* Mitchell, Melanie. Complexity: A Guided Tour. Oxford University Press, 2009.
+* Capra, Fritjof and Luisi, Pier Luigi. The Systems View of Life: A Unifying Vision. Cambridge University Press, 2016.
+* Bar-Yam, Yaneer. Dynamics of Complex Systems. Addison-Wesley, 1997.
+* Ball, Philip. Critical Mass: How One Thing Leads to Another. Macmillan, 2004.
+* Strogatz, Steven H. Nonlinear Dynamics and Chaos. CRC Press, 1994.
+* Gleick, James. Chaos: Making a New Science. Open Road Media, 2011.
+* Ball, Philip. The Self-Made Tapestry: Pattern Formation in Nature. Oxford University Press, 1999.
+* Camazine, Scott, et al. Self-Organization in Biological Systems. Princeton University Press, 2003.
+* Holland, John Henry. Adaptation in Natural and Artificial Systems. MIT press, 1992.
+* Solé, Ricard, and Elena, Santiago F. Viruses as Complex Adaptive Systems. Princeton University Press, 2018.
+* Thurner, Stefan, Hanel, Rudolf and Klimek, Peter. Introduction to the Theory of Complex Systems. Oxford University Press, 2018.
+* Page, Scott E. The Model Thinker. Hachette UK, 2018.
+* Pagels, Heinz R. The Dreams of Reason: The Computer and the Rise of the Sciences of Complexity. Bantam Books, 1989.
+* Sayama, Hiroki. Introduction to the Modeling and Analysis of Complex Systems. Open SUNY Textbooks, 2015.
+* Brockmann, Dirk. Complexity Explorables, 2019.

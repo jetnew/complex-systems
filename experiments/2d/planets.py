@@ -16,12 +16,12 @@ class Space:
 
     def create_blob(self, x, y, colour):
         blob = Blob(x, y, colour)
-        self.organisms[(x,y)] = blob
-        self.space[x,y] = blob.colour
+        self.organisms[(x, y)] = blob
+        self.space[x, y] = blob.colour
 
     def delete_blob(self, x, y):
         del self.organisms[(x, y)]
-        self.space[x,y] = (0,0,0)
+        self.space[x, y] = (0, 0, 0)
 
     def render(self, speed=100):
         cv2.imshow("Life", self.space)

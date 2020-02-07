@@ -1,4 +1,6 @@
+from utils import chance
 import random
+import numpy as np
 
 
 class Blob:
@@ -6,19 +8,22 @@ class Blob:
         """
         x, y - coordinates
         attrs - attributes:
-            - replicate_chance = 0.40
-            - die_chance = 0.30
+            - replicate_chance = 0.20
+            - die_chance = 0.00
+            - die_increment = 0.052
             - mutate_chance = 0.01
             - mutate_value = 0.4
-            - value = (1, 1, 1)
+            - colour = (1, 1, 1)
         """
         self.x = x
         self.y = y
-        self.replicate_chance = 0.20  # 0.40
-        self.die_chance = 0.00  # 0.30
-        self.mutate_chance = 0.005
+        self.replicate_chance = 0.20
+        self.die_chance = 0.00
+        self.die_increment = 0.052
+        self.mutate_chance = 0.01
         self.mutate_value = 0.4
         self.colour = colour
+        self.perceive_field = 2
 
     def replicate(self, world):
         _dx, _dy = random.choice(((-1, -1),
@@ -44,17 +49,40 @@ class Blob:
         world.delete_blob(self.x, self.y)
 
     def _mutate(self):
-        if random.random() < self.mutate_chance:
-            if random.random() < 0.50:
+        if chance(self.mutate_chance):
+            if chance(0.50):
                 return self.mutate_value
             else:
                 return -self.mutate_value
         else:
             return 0
 
+    def _get_perceive_field(self, world):
+        x1 = self.x - self.perceive_field
+        x2 = self.x + self.perceive_field
+        y1 = self.y - self.perceive_field
+        y2 = self.y + self.perceive_field
+        if x1 < 0:
+            x1 = 0
+        if x2 > world.dimx - 1:
+            x2 = world.dimx - 1
+        if y1 < 0:
+            y1 = 0
+        if y2 > world.dimy - 1:
+            y2 = world.dimy - 1
+        return x1, x2, y1, y2, world.space[x1:x2+1, y1:y2+1]
+
+    def perceive(self, world):
+        x1, x2, y1, y2, field = self._get_perceive_field(world)
+        self.neighbors = np.count_nonzero(field)
+        self.empty = (self.perceive_field * 2 + 1) ** 2 - self.neighbors
+        self.like = np.count_nonzero(self.colour)
+
     def next(self, world):
-        if random.random() < self.replicate_chance:
+        self.perceive(world)
+
+        if chance(self.replicate_chance):
             self.replicate(world)
-        if random.random() < self.die_chance:
+        if chance(self.die_chance):
             self.die(world)
-        self.die_chance += 0.052
+        self.die_chance += self.die_increment
