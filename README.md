@@ -13,6 +13,12 @@
 * [Ant Colony Optimization](ant-colony-optimization)
 * [Artificial Bee Colony](artificial-bee-colony)
 
+#### Simulation and Modeling
+* Courses
+    * Simulation and modeling of natural processes, University of Geneva, Coursera
+* Books
+    * Angela B. Shiflet & George W. Shiflet. Introduction to Computational Science: Modeling and Simulation for the Sciences. Princeton University Press, 2006.
+
 #### References
 * Mitchell, Melanie. Complexity: A Guided Tour. Oxford University Press, 2009.
 * Capra, Fritjof and Luisi, Pier Luigi. The Systems View of Life: A Unifying Vision. Cambridge University Press, 2016.
